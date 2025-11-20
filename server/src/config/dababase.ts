@@ -26,4 +26,4 @@ export default prisma;
 // 8. Run pnpm prisma migrate dev
 // 9. Run pnpm prisma generate
 // 10. Setup prisma client
-// 11. If have changes in schema run pnpm prisma migrate dev
+// 11. If have changes in schema.prisma run pnpm prisma migrate dev and run pnpm prisma generate
