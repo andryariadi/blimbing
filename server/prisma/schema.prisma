@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 model Customer {
@@ -34,10 +34,11 @@ model Account {
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
-  depositoTypeId String
-  depositoType   DepositoType @relation(fields: [depositoTypeId], references: [id])
+  packetId String
+  packet   DepositoType @relation(fields: [packetId], references: [id])
 
-  balance      Decimal       @default(0) @db.Decimal(15, 2)
+  balance Decimal @default(0) @db.Decimal(15, 2)
+
   transactions Transaction[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt

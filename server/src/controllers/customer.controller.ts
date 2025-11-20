@@ -7,7 +7,7 @@ class Controller {
       include: {
         accounts: {
           include: {
-            depositoType: true,
+            packet: true,
           },
         },
       },
@@ -44,7 +44,7 @@ class Controller {
       include: {
         accounts: {
           include: {
-            depositoType: true,
+            packet: true,
           },
         },
       },

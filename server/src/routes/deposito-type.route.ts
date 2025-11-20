@@ -5,7 +5,7 @@ const router: Router = Router();
 
 router.get("/", Controller.getDepositTypes);
 // router.get("/:id");
-// router.post("/");
+router.post("/", Controller.createDepositType);
 // router.put("/:id");
 // router.delete("/:id");
 
