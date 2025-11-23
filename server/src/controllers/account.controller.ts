@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../config/dababase";
+import { Prisma } from "../generated/prisma/client";
+import { existingAccount, existingCustomer } from "../utils";
 
 class Controller {
   static async getAccounts(req: Request, res: Response) {
@@ -22,17 +24,7 @@ class Controller {
   static async getAccount(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingAccount = await prisma.account.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingAccount) {
-      return res.status(404).json({
-        message: "Account not found",
-      });
-    }
+    await existingAccount(res, id);
 
     const account = await prisma.account.findUnique({
       where: { id },
@@ -54,19 +46,11 @@ class Controller {
   }
 
   static async createAccount(req: Request, res: Response) {
-    const { customerId, packetId, balance } = req.body;
+    const data: Prisma.AccountUncheckedCreateInput = req.body;
 
-    const existingCustomer = await prisma.customer.findUnique({
-      where: {
-        id: customerId,
-      },
-    });
+    const { customerId, packetId, balance } = data;
 
-    if (!existingCustomer) {
-      return res.status(404).json({
-        message: "Customer not found",
-      });
-    }
+    await existingCustomer(res, customerId);
 
     const existingPacket = await prisma.depositoType.findUnique({
       where: {
@@ -96,19 +80,11 @@ class Controller {
 
   static async updateAccount(req: Request, res: Response) {
     const { id } = req.params;
-    const { balance } = req.body;
+    const data: Prisma.AccountUpdateInput = req.body;
 
-    const existingAccount = await prisma.account.findUnique({
-      where: {
-        id,
-      },
-    });
+    const { balance } = data;
 
-    if (!existingAccount) {
-      return res.status(404).json({
-        message: "Account not found",
-      });
-    }
+    await existingAccount(res, id);
 
     const account = await prisma.account.update({
       where: {
@@ -128,17 +104,7 @@ class Controller {
   static async deleteAccount(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingAccount = await prisma.account.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingAccount) {
-      return res.status(404).json({
-        message: "Account not found",
-      });
-    }
+    await existingAccount(res, id);
 
     const account = await prisma.account.delete({
       where: {

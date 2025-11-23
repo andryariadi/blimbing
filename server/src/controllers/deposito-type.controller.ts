@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../config/dababase";
+import { Prisma } from "../generated/prisma/client";
+import { existingDepositType } from "../utils";
 
 class Controller {
   static async getDepositTypes(req: Request, res: Response) {
@@ -18,17 +20,7 @@ class Controller {
   static async getDepositType(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingDepositType = await prisma.depositoType.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingDepositType) {
-      return res.status(404).json({
-        message: "Deposit type not found",
-      });
-    }
+    await existingDepositType(res, id);
 
     const depositoType = await prisma.depositoType.findUnique({
       where: { id },
@@ -48,7 +40,9 @@ class Controller {
   }
 
   static async createDepositType(req: Request, res: Response) {
-    const { name, yearlyReturn } = req.body;
+    const data: Prisma.DepositoTypeCreateInput = req.body;
+
+    const { name, yearlyReturn } = data;
 
     const existingDepositType = await prisma.depositoType.findUnique({
       where: {
@@ -77,24 +71,19 @@ class Controller {
 
   static async updateDepositType(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, yearlyReturn } = req.body;
 
-    const existingDepositType = await prisma.depositoType.findUnique({
-      where: {
-        id,
-      },
-    });
+    const data: Prisma.DepositoTypeUpdateInput = req.body;
 
-    if (!existingDepositType) {
-      return res.status(404).json({
-        message: "Deposit type not found",
-      });
-    }
+    const { name, yearlyReturn } = data;
+
+    await existingDepositType(res, id);
 
     if (name) {
+      const nameValue = typeof name === "string" ? name : (name as any).set;
+
       const existing = await prisma.depositoType.findFirst({
         where: {
-          name: name,
+          name: nameValue,
           id: { not: id },
         },
       });
@@ -125,17 +114,7 @@ class Controller {
   static async deleteDepositType(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingDepositType = await prisma.depositoType.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingDepositType) {
-      return res.status(404).json({
-        message: "Deposit type not found",
-      });
-    }
+    await existingDepositType(res, id);
 
     const depositoType = await prisma.depositoType.delete({
       where: {

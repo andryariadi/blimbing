@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../config/dababase";
+import { Prisma } from "../generated/prisma/client";
+import { existingCustomer } from "../utils";
 
 class Controller {
   static async getCustomers(req: Request, res: Response) {
@@ -25,17 +27,7 @@ class Controller {
   static async getCustomer(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingCustomer = await prisma.customer.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingCustomer) {
-      return res.status(404).json({
-        message: "Customer not found",
-      });
-    }
+    await existingCustomer(res, id);
 
     const customer = await prisma.customer.findUnique({
       where: {
@@ -57,7 +49,9 @@ class Controller {
   }
 
   static async createCustomer(req: Request, res: Response) {
-    const { name } = req.body;
+    const data: Prisma.CustomerCreateInput = req.body;
+
+    const { name } = data;
 
     const customer = await prisma.customer.create({
       data: {
@@ -73,19 +67,12 @@ class Controller {
 
   static async updateCustomer(req: Request, res: Response) {
     const { id } = req.params;
-    const { name } = req.body;
 
-    const existingCustomer = await prisma.customer.findUnique({
-      where: {
-        id,
-      },
-    });
+    const data: Prisma.CustomerUpdateInput = req.body;
 
-    if (!existingCustomer) {
-      return res.status(404).json({
-        message: "Customer not found",
-      });
-    }
+    const { name } = data;
+
+    await existingCustomer(res, id);
 
     const customer = await prisma.customer.update({
       where: {
@@ -105,17 +92,7 @@ class Controller {
   static async deleteCustomer(req: Request, res: Response) {
     const { id } = req.params;
 
-    const existingCustomer = await prisma.customer.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingCustomer) {
-      return res.status(404).json({
-        message: "Customer not found",
-      });
-    }
+    await existingCustomer(res, id);
 
     const customer = await prisma.customer.delete({
       where: {
