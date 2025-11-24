@@ -34,11 +34,11 @@ const ASidebar = () => {
           <SidebarGroupLabel>Applications</SidebarGroupLabel>
 
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {sidebarItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                    <Link href={item.url} className="space-x-2.5">
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>

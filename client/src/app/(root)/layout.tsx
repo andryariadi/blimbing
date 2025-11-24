@@ -2,25 +2,36 @@ import ASidebar from "@/components/ASidebar";
 import Nabvar from "@/components/Navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+import { Suspense } from "react";
 
-export default async function AppLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+// Pisahkan komponen yang akses cookies
+async function LayoutContent({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <div className="bg-amber-500 w-full flex">
+      <div className="b-amber-500 w-full flex">
         <ASidebar />
 
-        <main className="bg-lime-600">
+        <main className="b-lime-600">
           <Nabvar />
           {children}
         </main>
       </div>
     </SidebarProvider>
+  );
+}
+
+// Layout utama bungkus dengan Suspense
+export default function AppLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LayoutContent>{children}</LayoutContent>
+    </Suspense>
   );
 }
