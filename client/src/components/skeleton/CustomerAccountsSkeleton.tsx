@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const CustomerAccountTableSkeleton = () => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 border border-muted rounded-md p-4">
       {/* Card Header Skeleton */}
       <div className="flex justify-between items-center">
         <div className="space-y-2">

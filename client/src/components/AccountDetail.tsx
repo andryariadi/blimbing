@@ -1,0 +1,50 @@
+import { getAccount } from "@/lib/actions/account.action";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { formatCurrency } from "@/lib/utils";
+import { Account } from "@/lib/types";
+
+const AccountDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const account: Account = await getAccount(id);
+
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex justify-between items-start">
+          <div>
+            <CardTitle className="font-mono text-lg">{account.id}</CardTitle>
+            <CardDescription className="mt-2">{account.customer?.name}</CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-sm text-muted-foreground">Deposito Type</p>
+            <p className="font-semibold">{account.packet?.name}</p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Yearly Return</p>
+            <p className="font-semibold">{account.packet?.yearlyReturn}% per year</p>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Current Balance</p>
+          <p className="text-2xl font-bold">{formatCurrency(account.balance)}</p>
+        </div>
+        <div className="flex gap-3">
+          <Link href={`/accounts/${id}/deposit`}>
+            <Button>Deposit</Button>
+          </Link>
+          <Link href={`/accounts/${id}/withdraw`}>
+            <Button variant="outline">Withdraw</Button>
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default AccountDetail;

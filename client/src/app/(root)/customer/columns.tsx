@@ -73,7 +73,7 @@ export const columns: ColumnDef<Customer>[] = [
           </Link>
 
           {/* Edit Button */}
-          <CustomerForm title="Update Customer" description="Start by adding customer information to the system" icon={<Edit size={40} />} customer={customer} />
+          <CustomerForm title="Update Customer" description="Start by updating customer information to the system" icon={<Edit size={40} />} customer={customer} />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

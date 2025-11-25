@@ -80,9 +80,9 @@ class Controller {
 
   static async updateAccount(req: Request, res: Response) {
     const { id } = req.params;
-    const data: Prisma.AccountUpdateInput = req.body;
+    const data: Prisma.AccountUncheckedCreateInput = req.body;
 
-    const { balance } = data;
+    const { balance, packetId, customerId } = data;
 
     await existingAccount(res, id);
 
@@ -91,6 +91,8 @@ class Controller {
         id,
       },
       data: {
+        customerId,
+        packetId,
         balance,
       },
     });

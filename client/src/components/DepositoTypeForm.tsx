@@ -7,48 +7,50 @@ import { Loader } from "lucide-react";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CustomerFormData, customerSchema } from "@/lib/validations";
-import { createCustomer, updateCustomer } from "@/lib/actions/customer.action";
+import { DepositoTypeFormData, depositoTypeSchema } from "@/lib/validations";
 import { toast } from "react-toastify";
-import { Customer } from "@/lib/types";
+import { DepositoType } from "@/lib/types";
 import { useEffect } from "react";
+import { createDepositoType, updateDepositoType } from "@/lib/actions/depositotype.action";
 
-type CustomerFormProps = {
+type DepositoTypeFormProps = {
   title: string;
   description: string;
   icon: React.ReactNode;
-  customer?: Customer;
+  depositoType?: DepositoType;
 };
 
-const CustomerForm = ({ title, description, icon, customer }: CustomerFormProps) => {
-  const form = useForm<CustomerFormData>({
-    resolver: zodResolver(customerSchema),
+const DepositoTyperForm = ({ title, description, icon, depositoType }: DepositoTypeFormProps) => {
+  const form = useForm<DepositoTypeFormData>({
+    resolver: zodResolver(depositoTypeSchema),
     defaultValues: {
-      name: customer?.name || "",
+      name: depositoType?.name || "",
+      yearlyReturn: Number(depositoType?.yearlyReturn) || 0,
     },
   });
 
   useEffect(() => {
-    if (customer) {
+    if (depositoType) {
       form.reset({
-        name: customer.name || "",
+        name: depositoType.name || "",
+        yearlyReturn: Number(depositoType.yearlyReturn) || 0,
       });
     }
-  }, [customer, form]);
+  }, [depositoType, form]);
 
-  const handleSubmitUser: SubmitHandler<CustomerFormData> = async (data) => {
+  const handleSubmitDepositoType: SubmitHandler<DepositoTypeFormData> = async (data) => {
     console.log({ data });
 
     try {
-      if (title === "Create Customer") {
-        const res = await createCustomer(data);
+      if (title === "Create Deposito Type") {
+        const res = await createDepositoType(data);
 
         if (res.data) {
           form.reset();
           toast.success(res.message);
         }
       } else {
-        const res = await updateCustomer(customer?.id as string, data.name);
+        const res = await updateDepositoType(depositoType?.id as string, data);
 
         if (res.data) {
           form.reset();
@@ -63,7 +65,7 @@ const CustomerForm = ({ title, description, icon, customer }: CustomerFormProps)
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {title === "Update Customer" ? (
+        {title === "Update Deposito Type" ? (
           <Button variant="outline" size="icon-sm">
             {icon}
           </Button>
@@ -74,23 +76,39 @@ const CustomerForm = ({ title, description, icon, customer }: CustomerFormProps)
 
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmitUser)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(handleSubmitDepositoType)} className="space-y-8">
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
               <DialogDescription>{description}</DialogDescription>
             </DialogHeader>
 
-            {/* Firstname */}
+            {/* Name */}
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Deposito Type Name</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormDescription>Enter your name</FormDescription>
+                  <FormDescription>Enter the deposito type name</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Yearly Return */}
+            <FormField
+              control={form.control}
+              name="yearlyReturn"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Yearly Return</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" onChange={(e) => field.onChange(e.target.valueAsNumber)} value={field.value} />
+                  </FormControl>
+                  <FormDescription>Enter the yearly return</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -113,4 +131,4 @@ const CustomerForm = ({ title, description, icon, customer }: CustomerFormProps)
     </Dialog>
   );
 };
-export default CustomerForm;
+export default DepositoTyperForm;

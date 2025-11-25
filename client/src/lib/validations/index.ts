@@ -5,13 +5,14 @@ export const customerSchema = z.object({
 });
 
 export const depositoTypeSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name is too long"),
+  name: z.string().min(1, "Deposito type name is required").max(100, "Deposito type name is too long"),
   yearlyReturn: z.number({ error: "Yearly return must be a number" }).min(0, "Yearly return must be positive").max(100, "Yearly return cannot exceed 100%"),
 });
 
 export const accountSchema = z.object({
   customerId: z.string().min(1, "Customer is required"),
-  depositoTypeId: z.string().min(1, "Deposito type is required"),
+  packetId: z.string().min(1, "Deposito type is required"),
+  balance: z.number({ error: "Balance must be a number" }).min(0, "Balance must be positive").optional(),
 });
 
 export const depositSchema = z.object({

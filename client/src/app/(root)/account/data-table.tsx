@@ -5,10 +5,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { DataTablePagination } from "@/components/TablePagination";
-import { deleteCustomer } from "@/lib/actions/customer.action";
-import { Customer } from "@/lib/types";
+import { Account } from "@/lib/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { deleteAccount } from "@/lib/actions/account.action";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,18 +41,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
       return await Promise.all(
         selectedRows.map(async (row) => {
-          const customerId = (row.original as Customer).id;
-
-          await deleteCustomer(customerId);
+          const accountId = (row.original as Account).id;
+          return await deleteAccount(accountId);
         })
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
 
       setRowSelection({});
 
-      toast.success("Customer(s) deleted successfully");
+      toast.success("Account(s) deleted successfully");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -66,7 +65,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <div className="flex justify-end">
           <button className="flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => mutation.mutate()} disabled={mutation.isPending}>
             <Trash2 className="w-4 h-4" />
-            {mutation.isPending ? "Deleting..." : `Delete Customer(s) ${Object.keys(rowSelection).length}`}
+            {mutation.isPending ? "Deleting..." : `Delete Account(s) ${Object.keys(rowSelection).length}`}
           </button>
         </div>
       )}

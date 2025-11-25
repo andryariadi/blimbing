@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { CustomerFormData } from "../validations";
+import { AccountFormData, CustomerFormData } from "../validations";
 
 export const getAccounts = async () => {
   try {
@@ -35,14 +35,19 @@ export const getAccount = async (id: string) => {
   }
 };
 
-export const createAccount = async (formData: CustomerFormData) => {
+export const createAccount = async (formData: AccountFormData) => {
   try {
+    console.log({ formData }, "<--server");
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: formData.name }),
+      body: JSON.stringify({
+        customerId: formData.customerId,
+        packetId: formData.packetId,
+      }),
     });
 
     if (!res.ok) {
@@ -59,14 +64,20 @@ export const createAccount = async (formData: CustomerFormData) => {
   }
 };
 
-export const updateAccount = async (id: string, name: string) => {
+export const updateAccount = async (id: string, formData: AccountFormData) => {
+  console.log({ id, formData }, "<--server");
+
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({
+        customerId: formData.customerId,
+        packetId: formData.packetId,
+        balance: formData.balance,
+      }),
     });
 
     if (!res.ok) {
