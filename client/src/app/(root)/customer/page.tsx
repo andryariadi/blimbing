@@ -2,8 +2,9 @@ import { getCustomers } from "@/lib/actions/customer.action";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Suspense } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { DataTableSkeleton } from "@/components/skeleton/DataTableSkeleton";
+import CustomerForm from "@/components/CustomerForm";
+import { UserRoundPlus } from "lucide-react";
 
 async function CustomerTableContent() {
   const customers = await getCustomers();
@@ -23,13 +24,13 @@ const CustomerPage = async () => {
           <p className="text-sm text-muted-foreground">Manage customer accounts</p>
         </div>
 
-        <Link href="/customers/create">
-          <Button variant="outline">Add Customer</Button>
-        </Link>
+        <div>
+          <CustomerForm title="Create Customer" description="Start by adding customer information to the system" icon={<UserRoundPlus />} />
+        </div>
       </div>
 
       {/* Table */}
-      <Suspense fallback={<div>Loading customers...</div>}>
+      <Suspense fallback={<DataTableSkeleton />}>
         <CustomerTableContent />
       </Suspense>
     </div>

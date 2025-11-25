@@ -18,12 +18,12 @@ export interface DepositoType {
 export interface Account {
   id: string;
   customerId: string;
-  depositoTypeId: string;
+  packetId: string;
   balance: number;
   createdAt: string;
   updatedAt: string;
   customer?: Customer;
-  depositoType?: DepositoType;
+  packet?: DepositoType;
   transactions?: Transaction[];
 }
 

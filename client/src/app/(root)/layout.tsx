@@ -1,5 +1,6 @@
 import ASidebar from "@/components/ASidebar";
 import Nabvar from "@/components/Navbar";
+import QueryProvider from "@/components/Providers/QueryProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
@@ -10,16 +11,18 @@ async function LayoutContent({ children }: { children: React.ReactNode }) {
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
-      <div className="b-amber-500 w-full flex">
-        <ASidebar />
+    <QueryProvider>
+      <SidebarProvider defaultOpen={defaultOpen}>
+        <div className="b-amber-500 w-full flex">
+          <ASidebar />
 
-        <main className="b-lime-600">
-          <Nabvar />
-          {children}
-        </main>
-      </div>
-    </SidebarProvider>
+          <main className="b-lime-600">
+            <Nabvar />
+            {children}
+          </main>
+        </div>
+      </SidebarProvider>
+    </QueryProvider>
   );
 }
 

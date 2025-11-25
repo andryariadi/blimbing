@@ -1,9 +1,11 @@
 "use client";
 
+import CustomerForm from "@/components/CustomerForm";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Customer } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal, Eye, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -27,14 +29,14 @@ export const columns: ColumnDef<Customer>[] = [
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0 hover:bg-transparent">
-          Name
+        <div onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="flex items-center justify-center hover:bg-transparent">
+          <span>Name</span>
           <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </div>
       );
     },
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("name")}</div>;
+      return <div className="font-medium text-center">{row.getValue("name")}</div>;
     },
     size: 150,
   },
@@ -42,23 +44,15 @@ export const columns: ColumnDef<Customer>[] = [
     accessorKey: "createdAt",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="p-0 hover:bg-transparent">
-          Created At
+        <div onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="flex items-center hover:bg-transparent">
+          <span>Created At</span>
           <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </div>
       );
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
-      return (
-        <div className="text-sm text-muted-foreground">
-          {date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })}
-        </div>
-      );
+      return <div className="text-sm text-muted-foreground">{formatDate(date)}</div>;
     },
     size: 150,
   },
@@ -71,7 +65,7 @@ export const columns: ColumnDef<Customer>[] = [
       return (
         <div className="flex items-center gap-2">
           {/* View Button */}
-          <Link href={`/customers/${customer.id}`}>
+          <Link href={`/customer/${customer.id}`}>
             <Button variant="outline" size="sm" className="h-8 w-8 p-0">
               <Eye className="h-4 w-4" />
               <span className="sr-only">View customer</span>
@@ -79,14 +73,8 @@ export const columns: ColumnDef<Customer>[] = [
           </Link>
 
           {/* Edit Button */}
-          <Link href={`/customers/${customer.id}/edit`}>
-            <Button variant="outline" size="sm" className="h-8 w-8 p-0">
-              <Edit className="h-4 w-4" />
-              <span className="sr-only">Edit customer</span>
-            </Button>
-          </Link>
+          <CustomerForm title="Update Customer" description="Start by adding customer information to the system" icon={<Edit size={40} />} customer={customer} />
 
-          {/* Dropdown Menu untuk actions tambahan */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

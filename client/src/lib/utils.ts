@@ -14,7 +14,7 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-export function formatDate(date: string): string {
+export function formatDate(date: string | Date): string {
   return new Date(date).toLocaleDateString("id-ID", {
     year: "numeric",
     month: "long",

@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { CustomerFormData } from "../validations";
 
-export const getCustomers = async () => {
+export const getAccounts = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`);
 
     if (!res.ok) {
-      throw new Error("Failed to fetch customers");
+      throw new Error("Failed to fetch accounts");
     }
 
     const data = await res.json();
@@ -19,12 +19,12 @@ export const getCustomers = async () => {
   }
 };
 
-export const getCustomer = async (id: string) => {
+export const getAccount = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`);
 
     if (!res.ok) {
-      throw new Error("Failed to fetch customer");
+      throw new Error("Failed to fetch account");
     }
 
     const data = await res.json();
@@ -35,9 +35,9 @@ export const getCustomer = async (id: string) => {
   }
 };
 
-export const createCustomer = async (formData: CustomerFormData) => {
+export const createAccount = async (formData: CustomerFormData) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,12 +46,12 @@ export const createCustomer = async (formData: CustomerFormData) => {
     });
 
     if (!res.ok) {
-      throw new Error("Failed to create customer");
+      throw new Error("Failed to create account");
     }
 
     const data = await res.json();
 
-    revalidatePath("/customer");
+    revalidatePath("/account");
 
     return data;
   } catch (error) {
@@ -59,9 +59,9 @@ export const createCustomer = async (formData: CustomerFormData) => {
   }
 };
 
-export const updateCustomer = async (id: string, name: string) => {
+export const updateAccount = async (id: string, name: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -70,12 +70,12 @@ export const updateCustomer = async (id: string, name: string) => {
     });
 
     if (!res.ok) {
-      throw new Error("Failed to update customer");
+      throw new Error("Failed to update account");
     }
 
     const data = await res.json();
 
-    revalidatePath("/customer");
+    revalidatePath("/account");
 
     return data;
   } catch (error) {
@@ -83,17 +83,17 @@ export const updateCustomer = async (id: string, name: string) => {
   }
 };
 
-export const deleteCustomer = async (id: string) => {
+export const deleteAccount = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`, {
       method: "DELETE",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to delete customer");
+      throw new Error("Failed to delete account");
     }
 
-    revalidatePath("/customer");
+    revalidatePath("/account");
 
     return res.json();
   } catch (error) {
