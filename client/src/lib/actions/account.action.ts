@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { AccountFormData, CustomerFormData } from "../validations";
+import { AccountFormData } from "../validations";
 
 export const getAccounts = async () => {
   try {
@@ -16,6 +16,7 @@ export const getAccounts = async () => {
     return data.data;
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
 

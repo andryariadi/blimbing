@@ -15,9 +15,6 @@ const AccountTransactionsTable = async ({ params }: { params: Promise<{ id: stri
             <CardTitle>Transactions</CardTitle>
             <CardDescription>All transactions for this account</CardDescription>
           </div>
-          {/* <Link href="/accounts/create">
-            <Button size="sm">Create Account</Button>
-          </Link> */}
         </div>
       </CardHeader>
 

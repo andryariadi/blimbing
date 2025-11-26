@@ -1,4 +1,4 @@
-import { Users, UserRound, HandCoins, Wallet, House } from "lucide-react";
+import { Users, UserRound, HandCoins, House } from "lucide-react";
 
 export const sidebarItems = [
   {
@@ -21,11 +21,11 @@ export const sidebarItems = [
     url: "/deposito-type",
     icon: HandCoins,
   },
-  {
-    title: "Transactions",
-    url: "/transaction",
-    icon: Wallet,
-  },
+  // {
+  //   title: "Transactions",
+  //   url: "/transaction",
+  //   icon: Wallet,
+  // },
 ];
 
 export const cardsMenu = [

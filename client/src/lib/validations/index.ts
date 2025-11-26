@@ -15,10 +15,10 @@ export const accountSchema = z.object({
   balance: z.number({ error: "Balance must be a number" }).min(0, "Balance must be positive").optional(),
 });
 
-export const depositSchema = z.object({
+export const transactionSchema = z.object({
   accountId: z.string().min(1, "Account is required"),
   amount: z.number({ error: "Amount must be a number" }).positive("Amount must be positive"),
-  transactionDate: z.string().min(1, "Transaction date is required"),
+  transactionDate: z.date({ error: "Transaction date is required" }),
 });
 
 export const withdrawSchema = z.object({
@@ -30,5 +30,5 @@ export const withdrawSchema = z.object({
 export type CustomerFormData = z.infer<typeof customerSchema>;
 export type DepositoTypeFormData = z.infer<typeof depositoTypeSchema>;
 export type AccountFormData = z.infer<typeof accountSchema>;
-export type DepositFormData = z.infer<typeof depositSchema>;
+export type TransactionFormData = z.infer<typeof transactionSchema>;
 export type WithdrawFormData = z.infer<typeof withdrawSchema>;
