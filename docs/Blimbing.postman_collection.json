@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "bccb180c-402a-47d5-b5a6-69e5d2af7aa7",
+		"name": "Blimbing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27334572"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "getCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BLIMBING}}/customers",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "creaateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Andry Ariadi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/customers",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomer",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Akbar Tanjung K\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/customers/3b20119b-1cd6-4fdf-b57a-beddd2398364",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"customers",
+								"3b20119b-1cd6-4fdf-b57a-beddd2398364"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCustomer",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deposito Type",
+			"item": [
+				{
+					"name": "getDepositoTypes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createDepositoType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"silver\",\r\n    \"yearlyReturn\": 5.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepositoType",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateDepositoType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"silver\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types/39251781-33ed-42cd-abd4-dd0717d21e9c",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types",
+								"39251781-33ed-42cd-abd4-dd0717d21e9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDepositoType",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"silver\",\r\n    \"yearlyReturn\": 5.00\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "getAccounts",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "createAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"49523017-f8bd-48e7-a253-7e65daea19f4\",\r\n    \"packetId\": \"39251781-33ed-42cd-abd4-dd0717d21e9c\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/accounts",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccount",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateAccount",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BLIMBING}}/accounts/d47c3d0b-6863-48f2-a72d-07b02af5e93d",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"accounts",
+								"d47c3d0b-6863-48f2-a72d-07b02af5e93d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"0c385c63-a867-4c46-96e1-8ef8245e43fc\",\r\n    \"packetId\": \r\n}"
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/accounts/",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "getTransactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BLIMBING}}/transactions",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createDeposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"4c34d5db-ffa7-46dd-ab3e-e1125904f4b8\",\r\n    \"amount\": 3000000,\r\n    \"transactionDate\": \"2024-11-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/transactions/deposit",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"transactions",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTransaction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"accountId\": \"acc_123\",\r\n  \"amount\": 500000,\r\n  \"transactionDate\": \"2024-06-15T10:30:00.000Z\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/transactions/89ca9856-f77d-421e-98d8-a8844cd38658",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"transactions",
+								"89ca9856-f77d-421e-98d8-a8844cd38658"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDepositoType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"silver\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types/39251781-33ed-42cd-abd4-dd0717d21e9c",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types",
+								"39251781-33ed-42cd-abd4-dd0717d21e9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDepositoType",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"silver\",\r\n    \"yearlyReturn\": 5.00\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/deposito-types",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"deposito-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createWithdraw",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"accountId\": \"acc_123\",\r\n  \"amount\": 500000,\r\n  \"transactionDate\": \"2024-06-15T10:30:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BLIMBING}}/transactions/withdraw",
+							"host": [
+								"{{URL_BLIMBING}}"
+							],
+							"path": [
+								"transactions",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

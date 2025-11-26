@@ -1,0 +1,39 @@
+-- customers
+CREATE TABLE customers (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+name VARCHAR(255) NOT NULL,
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- depositoTypes
+CREATE TABLE deposito_types (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+name VARCHAR(100) NOT NULL,
+yearlyReturn DECIMAL(5,2) NOT NULL, -- dalam persentase (3.00 = 3%)
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- accounts
+CREATE TABLE accounts (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+customerId UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+packetId UUID NOT NULL REFERENCES deposito_types(id),
+balance DECIMAL(15,2) DEFAULT 0.00,
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- transactions
+CREATE TABLE transactions (
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+accountId UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+type ENUM('DEPOSIT', 'WITHDRAW') NOT NULL,
+amount DECIMAL(15,2) NOT NULL,
+transactiondate DATE NOT NULL,
+balancebefore DECIMAL(15,2) NOT NULL,
+balanceAfter DECIMAL(15,2) NOT NULL,
+interestearned DECIMAL(15,2) DEFAULT 0.00,
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

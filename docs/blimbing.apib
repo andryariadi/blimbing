@@ -1,0 +1,733 @@
+FORMAT: 1A
+HOST: https://polls.apiblueprint.org/
+LINK_REFERENCE: https://blimbing.docs.apiary.io/#reference
+
+# Belimbing
+
+This API provides data on Customers, Accounts, Deposit Types and their Transactions.
+
+## Customer API [/customers]
+
+### Get All Customers [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                    "name": "Luffy",
+                    "createdAt": "2025-11-21T22:59:00.639Z",
+                    "updatedAt": "2025-11-21T22:59:00.639Z",
+                    "accounts": [
+                        {
+                            "id": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                            "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                            "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                            "balance": "3144.17",
+                            "createdAt": "2025-11-21T22:59:56.517Z",
+                            "updatedAt": "2025-11-21T23:26:10.056Z",
+                            "packet": {
+                                "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                                "name": "gold D",
+                                "yearlyReturn": "7",
+                                "createdAt": "2025-11-20T22:40:22.070Z",
+                                "updatedAt": "2025-11-20T22:51:07.426Z"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                    "name": "Kakashi",
+                    "createdAt": "2025-11-20T22:28:46.329Z",
+                    "updatedAt": "2025-11-20T22:28:46.329Z",
+                    "accounts": [
+                        {
+                            "id": "de9e023f-3f4b-4b1e-9d7a-389b6501776d",
+                            "customerId": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                            "packetId": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                            "balance": "0",
+                            "createdAt": "2025-11-20T22:29:48.732Z",
+                            "updatedAt": "2025-11-20T22:29:48.732Z",
+                            "packet": {
+                                "id": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                                "name": "bronze",
+                                "yearlyReturn": "3",
+                                "createdAt": "2025-11-20T08:35:08.706Z",
+                                "updatedAt": "2025-11-20T08:35:08.706Z"
+                            }
+                        },
+                        {
+                            "id": "f63c2e29-137c-44a1-9503-90b6178d8dae",
+                            "customerId": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                            "packetId": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                            "balance": "0",
+                            "createdAt": "2025-11-21T22:54:53.035Z",
+                            "updatedAt": "2025-11-21T22:54:53.035Z",
+                            "packet": {
+                                "id": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                                "name": "silver",
+                                "yearlyReturn": "5",
+                                "createdAt": "2025-11-20T08:36:59.050Z",
+                                "updatedAt": "2025-11-20T08:36:59.050Z"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "message": "Success fetching customers"
+        }
+        
+### Get Customer [GET/customer/id={id}]
+
++ Parameters
+
+    + id (required)
+    
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                "name": "Luffy",
+                "createdAt": "2025-11-21T22:59:00.639Z",
+                "updatedAt": "2025-11-21T22:59:00.639Z",
+                "accounts": [
+                    {
+                        "id": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                        "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                        "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                        "balance": "3144.17",
+                        "createdAt": "2025-11-21T22:59:56.517Z",
+                        "updatedAt": "2025-11-21T23:26:10.056Z",
+                        "packet": {
+                            "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                            "name": "gold D",
+                            "yearlyReturn": "7",
+                            "createdAt": "2025-11-20T22:40:22.070Z",
+                            "updatedAt": "2025-11-20T22:51:07.426Z"
+                        }
+                    }
+                ]
+            },
+            "message": "Success fetching customer"
+        }
+        
++ Response 400 (aplication/json)
+
+        {
+            "message": "Customer not found"
+        }
+
+### Create a Customer [POST]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "name": "Ronaldo"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                 "data": {
+                    "id": "4747d9ff-694e-42ae-8da8-accad139b7d2",
+                    "name": "Ronaldo",
+                    "createdAt": "2025-11-23T08:10:17.786Z",
+                    "updatedAt": "2025-11-23T08:10:17.786Z"
+                },
+                "message": "Success creating customer"
+            }
+            
+
+### Update a Customer [PUT/customers/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "name": "Andry Ariadi"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                 "data": {
+                    "id": "4747d9ff-694e-42ae-8da8-accad139b7d2",
+                    "name": "Andry Ariadi",
+                    "createdAt": "2025-11-23T08:10:17.786Z",
+                    "updatedAt": "2025-11-23T08:10:17.786Z"
+                },
+                "message": "Success updating customer"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Customer not found"
+        }
+        
+### Delete a Customer [DELETE/customers/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                 "data": {
+                    "id": "4747d9ff-694e-42ae-8da8-accad139b7d2",
+                    "name": "Andry Ariadi",
+                    "createdAt": "2025-11-23T08:10:17.786Z",
+                    "updatedAt": "2025-11-23T08:10:17.786Z"
+                },
+                "message": "Success deleting customer"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Customer not found"
+        }
+        
+
+## Account API [/accounts]
+
+### Get All Accounts [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                    "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                    "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                    "balance": "3144.17",
+                    "createdAt": "2025-11-21T22:59:56.517Z",
+                    "updatedAt": "2025-11-21T23:26:10.056Z",
+                    "customer": {
+                        "id": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                        "name": "Luffy",
+                        "createdAt": "2025-11-21T22:59:00.639Z",
+                        "updatedAt": "2025-11-21T22:59:00.639Z"
+                    },
+                    "packet": {
+                        "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                        "name": "gold D",
+                        "yearlyReturn": "7",
+                        "createdAt": "2025-11-20T22:40:22.070Z",
+                        "updatedAt": "2025-11-20T22:51:07.426Z"
+                    }
+                },
+                {
+                    "id": "f63c2e29-137c-44a1-9503-90b6178d8dae",
+                    "customerId": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                    "packetId": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                    "balance": "0",
+                    "createdAt": "2025-11-21T22:54:53.035Z",
+                    "updatedAt": "2025-11-21T22:54:53.035Z",
+                    "customer": {
+                        "id": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                        "name": "Kakashi",
+                        "createdAt": "2025-11-20T22:28:46.329Z",
+                        "updatedAt": "2025-11-20T22:28:46.329Z"
+                    },
+                    "packet": {
+                        "id": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                        "name": "silver",
+                        "yearlyReturn": "5",
+                        "createdAt": "2025-11-20T08:36:59.050Z",
+                        "updatedAt": "2025-11-20T08:36:59.050Z"
+                    }
+                }
+            ],
+            "message": "Success fetching customers"
+        }
+        
+### Get Account [GET/accounts/id={id}]
+
++ Parameters
+
+    + id (required)
+    
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": "de9e023f-3f4b-4b1e-9d7a-389b6501776d",
+                "customerId": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                "packetId": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                "balance": "0",
+                "createdAt": "2025-11-20T22:29:48.732Z",
+                "updatedAt": "2025-11-20T22:29:48.732Z",
+                "customer": {
+                    "id": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                    "name": "Kakashi",
+                    "createdAt": "2025-11-20T22:28:46.329Z",
+                    "updatedAt": "2025-11-20T22:28:46.329Z"
+                },
+                "packet": {
+                    "id": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                    "name": "bronze",
+                    "yearlyReturn": "3",
+                    "createdAt": "2025-11-20T08:35:08.706Z",
+                    "updatedAt": "2025-11-20T08:35:08.706Z"
+                },
+                "transactions": []
+            },
+            "message": "Success fetching customer"
+        }
+        
++ Response 400 (aplication/json)
+
+        {
+            "message": "Customer not found"
+        }
+
+### Create a Account [POST]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "a277057b-4bd1-45b2-ad8f-500713f81f20",
+                    "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                    "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                    "balance": "0",
+                    "createdAt": "2025-11-23T12:13:35.099Z",
+                    "updatedAt": "2025-11-23T12:13:35.099Z"
+            },
+                "message": "Success creating account"
+            }
+            
+
+### Update a Customer [PUT/customers/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "balance": 3000
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "d47c3d0b-6863-48f2-a72d-07b02af5e93d",
+                    "customerId": "0c385c63-a867-4c46-96e1-8ef8245e43fc",
+                    "packetId": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                    "balance": "3000",
+                    "createdAt": "2025-11-20T08:41:43.675Z",
+                    "updatedAt": "2025-11-23T12:18:31.253Z"
+                },
+                "message": "Success updating account"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Account not found"
+        }
+        
+### Delete a Customer [DELETE/customers/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "d47c3d0b-6863-48f2-a72d-07b02af5e93d",
+                    "customerId": "0c385c63-a867-4c46-96e1-8ef8245e43fc",
+                    "packetId": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                    "balance": "3000",
+                    "createdAt": "2025-11-20T08:41:43.675Z",
+                    "updatedAt": "2025-11-23T12:18:31.253Z"
+                },
+                "message": "Success deleting customer"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Account not found"
+        }
+        
+        
+## Deposito Types API [/deposito-types]
+
+### Get All Deposito Types [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                    "name": "bronze",
+                    "yearlyReturn": "3",
+                    "createdAt": "2025-11-20T08:35:08.706Z",
+                    "updatedAt": "2025-11-20T08:35:08.706Z"
+                },
+                {
+                    "id": "d6b8d66d-3ee8-4f4b-adab-954975c281c6",
+                    "name": "silver",
+                    "yearlyReturn": "5",
+                    "createdAt": "2025-11-20T08:36:59.050Z",
+                    "updatedAt": "2025-11-20T08:36:59.050Z"
+                },
+                {
+                    "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                    "name": "gold D",
+                    "yearlyReturn": "7",
+                    "createdAt": "2025-11-20T22:40:22.070Z",
+                    "updatedAt": "2025-11-20T22:51:07.426Z"
+                }
+            ],
+            "message": "Success fetching deposito types"
+        }
+        
+### Get Deposito Type [GET/deposito-types/id={id}]
+
++ Parameters
+
+    + id (required)
+    
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                "name": "bronze",
+                "yearlyReturn": "3",
+                "createdAt": "2025-11-20T08:35:08.706Z",
+                "updatedAt": "2025-11-20T08:35:08.706Z",
+                "accounts": [
+                    {
+                        "id": "de9e023f-3f4b-4b1e-9d7a-389b6501776d",
+                        "customerId": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                        "packetId": "3ebc05e5-9044-438e-93a2-dc31443ae3e3",
+                        "balance": "0",
+                        "createdAt": "2025-11-20T22:29:48.732Z",
+                        "updatedAt": "2025-11-20T22:29:48.732Z",
+                        "customer": {
+                            "id": "49523017-f8bd-48e7-a253-7e65daea19f4",
+                            "name": "Kakashi",
+                            "createdAt": "2025-11-20T22:28:46.329Z",
+                            "updatedAt": "2025-11-20T22:28:46.329Z"
+                        }
+                    }
+                ]
+            },
+            "message": "Success fetching deposito type"
+        }
+        
++ Response 400 (aplication/json)
+
+        {
+            "message": "Deposito type not found"
+        }
+
+### Create a Deposito Type [POST]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "name": "gold",
+                "yearlyReturn": 7
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "4c54bb21-d7bc-4f67-8730-bcc3d10fb178",
+                    "name": "gold",
+                    "yearlyReturn": "7",
+                    "createdAt": "2025-11-23T13:00:34.474Z",
+                    "updatedAt": "2025-11-23T13:00:34.474Z"
+                },
+                "message": "Success creating deposito type"
+            }
+            
+
+### Update a Deposito Type [PUT/deposito-type/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "name": "gold D",
+                "yearlyReturn": 11
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "4c54bb21-d7bc-4f67-8730-bcc3d10fb178",
+                    "name": "gold D",
+                    "yearlyReturn": "11",
+                    "createdAt": "2025-11-23T13:00:34.474Z",
+                    "updatedAt": "2025-11-23T13:05:31.812Z"
+                },
+                "message": "Success updating deposito type"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Deposito not found"
+        }
+        
+### Delete a Deposito Type [DELETE/deposito-type/id={id}]
+
++ Parameters
+
+    + id (required)
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "4c54bb21-d7bc-4f67-8730-bcc3d10fb178",
+                    "name": "D",
+                    "yearlyReturn": "11",
+                    "createdAt": "2025-11-23T13:00:34.474Z",
+                    "updatedAt": "2025-11-23T13:05:31.812Z"
+                },
+                "message": "Success deleting deposito type"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Deposito type not found"
+        }
+            
+
+## Transaction API [/transactions]
+
+### Get All Transactions [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "20fb6760-856f-4b02-9d30-9d9c463633f3",
+                    "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                    "type": "WITHDRAW",
+                    "amount": "5000000",
+                    "transactionDate": "2025-11-21T00:00:00.000Z",
+                    "balanceBefore": "10000000",
+                    "balanceAfter": "700000",
+                    "interestEarned": "700000",
+                    "createdAt": "2025-11-21T23:12:53.077Z"
+                },
+                {
+                    "id": "89ca9856-f77d-421e-98d8-a8844cd38658",
+                    "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                    "type": "DEPOSIT",
+                    "amount": "10000000",
+                    "transactionDate": "2024-11-22T00:00:00.000Z",
+                    "balanceBefore": "0",
+                    "balanceAfter": "10000000",
+                    "interestEarned": "0",
+                    "createdAt": "2025-11-21T23:07:12.574Z"
+                }
+            ],
+            "message": "Success fetching transactions"
+        }
+        
+### Get Transaction [GET/transaction/id={id}]
+
++ Parameters
+
+    + id (required)
+    
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": "89ca9856-f77d-421e-98d8-a8844cd38658",
+                "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                "type": "DEPOSIT",
+                "amount": "10000000",
+                "transactionDate": "2024-11-22T00:00:00.000Z",
+                "balanceBefore": "0",
+                "balanceAfter": "10000000",
+                "interestEarned": "0",
+                "createdAt": "2025-11-21T23:07:12.574Z",
+                "account": {
+                    "id": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                    "customerId": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                    "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                    "balance": "3144.17",
+                    "createdAt": "2025-11-21T22:59:56.517Z",
+                    "updatedAt": "2025-11-21T23:26:10.056Z",
+                    "customer": {
+                        "id": "2dafe1ad-c7b3-44fd-9706-50e84ad85a6b",
+                        "name": "Luffy",
+                        "createdAt": "2025-11-21T22:59:00.639Z",
+                        "updatedAt": "2025-11-21T22:59:00.639Z"
+                    },
+                    "packet": {
+                        "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                        "name": "gold D",
+                        "yearlyReturn": "7",
+                        "createdAt": "2025-11-20T22:40:22.070Z",
+                        "updatedAt": "2025-11-20T22:51:07.426Z"
+                    }
+                }
+            },
+            "message": "Success fetching transaction"
+        }
+        
++ Response 400 (aplication/json)
+
+        {
+            "message": "Transaction not found"
+        }
+
+### Create a Deposit [POST]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                "amount": 10000000,
+                "transactionDate": "2024-11-22"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "112d4806-d5d2-477f-89bb-d442c915dd87",
+                    "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                    "type": "DEPOSIT",
+                    "amount": "10000000",
+                    "transactionDate": "2024-11-22T00:00:00.000Z",
+                    "balanceBefore": "0",
+                    "balanceAfter": "10000000",
+                    "interestEarned": "0",
+                    "createdAt": "2025-11-23T13:18:43.541Z"
+                },
+                "message": "Success creating deposit"
+            }
+            
+
+### Update a Withdraw [PUT/deposito-type/id={id}]
+
++ Request (application/json)
+
+    + Body
+    
+             {
+                "accountId": "0a2f6beb-21fe-49ec-9643-8c694429d6ae",
+                "amount": 500000,
+                "transactionDate": "2024-11-22"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "data": {
+                    "id": "66b70aa5-a4be-49c5-9788-cd1aaafae922",
+                    "accountId": "b01c21ab-0943-4a69-a082-086fecb24a32",
+                    "type": "WITHDRAW",
+                    "amount": "500000",
+                    "transactionDate": "2025-10-10T00:00:00.000Z",
+                    "balanceBefore": "10000000",
+                    "balanceAfter": "641666.67",
+                    "interestEarned": "641666.67",
+                    "createdAt": "2025-11-23T13:26:28.055Z",
+                    "account": {
+                        "id": "b01c21ab-0943-4a69-a082-086fecb24a32",
+                        "customerId": "7400a05f-8afd-4629-812c-6378facf1b42",
+                        "packetId": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                        "balance": "641666.67",
+                        "createdAt": "2025-11-23T13:24:15.250Z",
+                        "updatedAt": "2025-11-23T13:26:28.344Z",
+                        "customer": {
+                            "id": "7400a05f-8afd-4629-812c-6378facf1b42",
+                            "name": "Akbar Tanjung K",
+                            "createdAt": "2025-11-20T06:46:26.208Z",
+                            "updatedAt": "2025-11-20T06:52:17.995Z"
+                        },
+                        "packet": {
+                            "id": "39251781-33ed-42cd-abd4-dd0717d21e9c",
+                            "name": "gold D",
+                            "yearlyReturn": "7",
+                            "createdAt": "2025-11-20T22:40:22.070Z",
+                            "updatedAt": "2025-11-20T22:51:07.426Z"
+                        }
+                    }
+                },
+                "message": "Success create withdraw"
+            }
+            
++ Response 400 (aplication/json)
+
+        {
+            "message": "Transaction not found"
+        }
