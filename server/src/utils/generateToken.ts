@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
 import { JWT_CONFIG } from "../config/jwt";
+import { Role } from "../generated/prisma/enums";
 
 interface TokenPayload {
   customerId: string;
   email: string;
-  role: string;
+  role: Role;
 }
 
 export const generateAccessToken = (payload: TokenPayload): string => {

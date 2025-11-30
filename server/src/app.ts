@@ -45,8 +45,5 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(port, () => {
-  const payload = { customerId: "sampleCustomerId", email: "sampleEmail", role: "sampleRole" };
-
-  generateAccessToken(payload);
   console.log(`Server is running on port ${port}!`);
 });
