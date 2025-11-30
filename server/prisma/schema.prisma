@@ -8,14 +8,38 @@ datasource db {
   // url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model Customer {
-  id        String    @id @default(uuid())
-  name      String
-  accounts  Account[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id           String         @id @default(uuid())
+  userName     String
+  email        String         @unique
+  password     String
+  role         Role           @default(USER)
+  refreshToken RefreshToken[]
+  accounts     Account[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 
   @@map("customers")
+}
+
+model RefreshToken {
+  id    String @id @default(uuid())
+  token String @unique
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([customerId])
+  @@index([token])
+  @@map("refresh_tokens")
 }
 
 model DepositoType {
