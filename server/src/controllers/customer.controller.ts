@@ -5,6 +5,8 @@ import { existingCustomer } from "../utils";
 import bcrypt from "bcryptjs";
 import { generateAccessToken, generateRefreshToken, getRefreshTokenExpiry, verifyRefreshToken } from "../utils/generateToken";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 class Controller {
   static async register(req: Request, res: Response) {
     const data: Prisma.CustomerCreateInput = req.body;
@@ -56,13 +58,13 @@ class Controller {
     });
 
     if (!customer) {
-      return res.status(401).json({ message: "Invalid credentials!" });
+      return res.status(401).json({ message: "Customer not found!" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, customer.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials!" });
+      return res.status(401).json({ message: "Invalid password!" });
     }
 
     // Generate tokens:
@@ -75,10 +77,11 @@ class Controller {
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
+    // Store refresh token in database:
     await prisma.refreshToken.create({
       data: {
-        token: refreshToken,
         customerId: customer.id,
+        token: refreshToken,
         expiresAt: getRefreshTokenExpiry(),
       },
     });
@@ -86,9 +89,9 @@ class Controller {
     // Set refresh token in HTTP-only cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: isProduction,
+      sameSite: isProduction ? "strict" : "lax",
+      maxAge: 10 * 60 * 1000,
     });
 
     return res.status(200).json({
@@ -106,6 +109,8 @@ class Controller {
 
     // Verify JWT:
     const decoded = verifyRefreshToken(refreshToken);
+
+    console.log({ refreshToken, decoded }, "<---andry");
 
     // Check if refresh token is valid:
     const storedToken = await prisma.refreshToken.findUnique({
@@ -138,8 +143,8 @@ class Controller {
       // Create new token:
       prisma.refreshToken.create({
         data: {
+          customerId: storedToken.customer.id as string,
           token: newRefreshToken,
-          customerId: storedToken.customer.id,
           expiresAt: getRefreshTokenExpiry(),
         },
       }),
@@ -148,9 +153,9 @@ class Controller {
     // Set new refresh token in HTTP-only cookie
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: isProduction,
+      sameSite: isProduction ? "strict" : "lax",
+      maxAge: 10 * 60 * 1000,
     });
 
     return res.status(200).json({
@@ -193,6 +198,27 @@ class Controller {
     res.clearCookie("refreshToken");
 
     return res.status(200).json({ message: "Logged out successfully" });
+  }
+
+  static async getProfile(req: Request, res: Response) {
+    const customerId = req.customer?.customerId;
+
+    console.log({ cus: req.customer }, "<---profile");
+
+    if (!customerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const customer = await prisma.customer.findUnique({
+      where: {
+        id: customerId,
+      },
+    });
+
+    return res.status(200).json({
+      data: customer,
+      message: "Success fetching profile customer",
+    });
   }
 
   static async getCustomers(req: Request, res: Response) {

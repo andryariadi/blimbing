@@ -1,9 +1,21 @@
 export interface Customer {
   id: string;
-  name: string;
+  userName: string;
+  email: string;
+  password: string;
+  role: "USER" | "ADMIN";
   createdAt: string;
   updatedAt: string;
   accounts?: Account[];
+  refreshToken?: RefreshToken[];
+}
+
+export interface RefreshToken {
+  id: string;
+  token: string;
+  expiresAt: Date;
+  customerId: string;
+  createdAt: string;
 }
 
 export interface DepositoType {

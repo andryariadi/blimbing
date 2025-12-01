@@ -30,5 +30,6 @@ export const verifyRefreshToken = (token: string): TokenPayload => {
 
 export const getRefreshTokenExpiry = (): Date => {
   const now = new Date();
-  return new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  //   return new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  return new Date(now.getTime() + 10 * 60 * 1000);
 };

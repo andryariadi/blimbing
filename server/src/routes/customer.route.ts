@@ -1,9 +1,12 @@
 import { Router } from "express";
 import Controller from "../controllers/customer.controller";
+import { autheticateToken, authorizeRoles, requireRole } from "../middleware";
+import { Role } from "../generated/prisma/enums";
 
 const router: Router = Router();
 
-router.get("/", Controller.getCustomers);
+router.get("/", requireRole(Role.ADMIN), Controller.getCustomers);
+router.get("/profile", autheticateToken, Controller.getProfile);
 router.get("/:id", Controller.getCustomer);
 router.post("/register", Controller.register);
 router.post("/login", Controller.login);

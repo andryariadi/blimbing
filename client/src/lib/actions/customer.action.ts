@@ -16,6 +16,7 @@ export const getCustomers = async () => {
     return data.data;
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
 
